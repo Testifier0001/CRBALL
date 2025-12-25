@@ -1,0 +1,287 @@
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CR Ball Football Club</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+}
+header {
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+nav {
+    background: #c40000;
+    padding: 10px;
+    text-align: center;
+}
+nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+nav a:hover {
+    text-decoration: underline;
+}
+section {
+    max-width: 1100px;
+    margin: auto;
+    padding: 40px 20px;
+}
+h2 {
+    text-align: center;
+    color: #c40000;
+}
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+table {
+    width: 100%;
+    background: white;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+th {
+    background: #c40000;
+    color: white;
+}
+button {
+    padding: 8px 15px;
+    background: #c40000;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background: #900000;
+}
+footer {
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+/* ===== 4-3-3 FORMATION ===== */
+.pitch {
+    background: #2e8b57;
+    border-radius: 12px;
+    padding: 25px;
+    max-width: 750px;
+    margin: auto;
+}
+.formation {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    gap: 25px;
+}
+.row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.player {
+    background: rgba(0,0,0,0.6);
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    color: white;
+    font-size: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>CR BALL FOOTBALL CLUB</h1>
+    <p>Passion • Discipline • Victory</p>
+</header>
+
+<nav>
+    <a href="#about">About</a>
+    <a href="#team">Team</a>
+    <a href="#lineup">Lineup</a>
+    <a href="#matches">Matches</a>
+    <a href="#news">News</a>
+</nav>
+
+<section id="about">
+    <h2>About CR Ball</h2>
+    <p style="text-align:center;">
+        CR Ball Football Club is dedicated to developing talent, teamwork,
+        and competitive football excellence. We play with heart every matchday.
+    </p>
+</section>
+
+<section id="team">
+    <h2>Team Departments</h2>
+    <div class="cards">
+        <div class="card">
+            <strong>Goalkeepers</strong><br>
+            1. ADEBAYO SHERIFF<br>
+            23. JOUSHABASIT<br>
+            99. MUHAMMED
+        </div>
+        <div class="card">
+            <strong>Defenders</strong><br>
+            2. AJAYISEMIU<br>
+            3. COLLINSKULL<br>
+            4. SADIUBOIUY<br>
+            5. SLIVERVIJOL
+        </div>
+        <div class="card">
+            <strong>Midfielders</strong><br>
+            6. SEMILORE<br>
+            8. FAVOR<br>
+            10. MONYIE
+        </div>
+        <div class="card">
+            <strong>Forwards</strong><br>
+            7. KOREDE<br>
+            9. ROQUEEB<br>
+            20. BOLAJI
+        </div>
+    </div>
+</section>
+
+<section id="lineup">
+    <h2>CR BALL – 4-3-3 FORMATION</h2>
+
+    <div class="pitch">
+        <div class="formation">
+
+            <div class="row">
+                <div class="player">7<br>KOREDE<br>LW</div>
+                <div class="player">9<br>ROQUEEB<br>ST</div>
+                <div class="player">20<br>BOLAJI<br>RW</div>
+            </div>
+
+            <div class="row">
+                <div class="player">8<br>FAVOR<br>LCM</div>
+                <div class="player">10<br>MONYIE<br>CAM</div>
+                <div class="player">6<br>SEMILORE<br>RCM</div>
+            </div>
+
+            <div class="row">
+                <div class="player">3<br>COLLINS<br>LB</div>
+                <div class="player">4<br>SADIU<br>CB</div>
+                <div class="player">5<br>SLIVER<br>CB</div>
+                <div class="player">2<br>AJAYI<br>RB</div>
+            </div>
+
+            <div class="row">
+                <div class="player">1<br>ADEBAYO<br>GK</div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="matches">
+    <h2>Upcoming Matches</h2>
+
+    <div style="text-align:center; margin-bottom:15px;">
+        <button onclick="filterMatches('all')">All</button>
+        <button onclick="filterMatches('Home')">Home</button>
+        <button onclick="filterMatches('Away')">Away</button>
+    </div>
+
+    <table id="matchTable">
+        <tr>
+            <th>Date</th>
+            <th>Opponent</th>
+            <th>Venue</th>
+        </tr>
+        <tr data-venue="Home">
+            <td>15 Jan 2026</td>
+            <td>Orelope FC</td>
+            <td>Home</td>
+        </tr>
+        <tr data-venue="Away">
+            <td>22 Jan 2026</td>
+            <td>Unique Stars</td>
+            <td>Away</td>
+        </tr>
+        <tr data-venue="Home">
+            <td>30 Jan 2026</td>
+            <td>Idiagbon FC</td>
+            <td>Home</td>
+        </tr>
+    </table>
+</section>
+
+<section id="news">
+    <h2>Latest News</h2>
+    <div id="newsContainer" class="cards"></div>
+</section>
+
+<footer>
+    <p>© <span id="year"></span> CR Ball Football Club</p>
+</footer>
+
+<script>
+window.onload = function () {
+    alert("Welcome to CR Ball Football Club!");
+};
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+function filterMatches(type) {
+    const rows = document.querySelectorAll("#matchTable tr[data-venue]");
+    rows.forEach(row => {
+        row.style.display = (type === "all" || row.dataset.venue === type) ? "" : "none";
+    });
+}
+
+const news = [
+    { title: "Season Kickoff", text: "CR Ball begins the season with full confidence." },
+    { title: "Academy Trials", text: "Youth academy trials are now open." },
+    { title: "New Coach", text: "Mr Monyie appointed as head coach." }
+];
+
+const container = document.getElementById("newsContainer");
+news.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `<h3>${item.title}</h3><p>${item.text}</p>`;
+    container.appendChild(div);
+});
+</script>
+
+</body>
+</html>
+"""
+
+if __name__ == "__main__":
+    app.run(debug=True)
